@@ -1,0 +1,20 @@
+version: '2'
+services:
+  master:
+    image: spark-docker:0.1.0-SNAPSHOT
+    environment:
+    - ROLE=master
+    - SPARK_MASTER_HOST=0.0.0.0
+    ports:
+    - 8080:8080
+    - 7077:7077
+
+  worker:
+    image: spark-docker:0.1.0-SNAPSHOT
+    environment:
+    - ROLE=slave
+    - SPARK_MASTER=spark://master:7077
+    ports:
+    - 8081:8081
+    links:
+    - master
