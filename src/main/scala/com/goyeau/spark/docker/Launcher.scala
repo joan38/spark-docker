@@ -1,8 +1,9 @@
 package com.goyeau.spark.docker
 
+import buildinfo.BuildInfo
+
 import scala.concurrent.duration._
 import sys.process._
-
 import org.apache.spark.SparkConf
 
 object Launcher extends App {
@@ -19,8 +20,10 @@ object Launcher extends App {
     val sparkConf = new SparkConf()
       .setMaster("spark://localhost:7077")
       .setAppName("Simple Application")
+      .setJars(Seq(s"lib/${BuildInfo.assembly_assemblyJarName}"))
 
-    Count.run(sparkConf)
+//    Count.run(sparkConf)
+    Streaming.run(sparkConf)
   }
 
   def startSlave(): Unit = {
